@@ -1,0 +1,77 @@
+'****************************************************************
+'*  Name    : UNTITLED.BAS                                      *
+'*  Author  : ALAN MENDOZA CAMPOS            *
+'*  Notice  : Copyright (c) 2017 [select VIEW...EDITOR OPTIONS] *
+'*          : All Rights Reserved                               *
+'*  Date    : 11/12/2017                                        *
+'*  Version : 1.0                                               *
+'*  Notes   :                                                   *
+'*          :                                                   *
+'****************************************************************
+
+INCLUDE "modedefs.bas"   ;incluyen los modos de comunicación 
+define   xt_osc;cambia a oscilador XT en el IC-Prog.  
+cmcon = 7
+ledv VAR porta.2                ;nombre ledr al puerto b.1  
+leda VAR porta.3                
+ledr VAR porta.4 
+dat VAR BYTE
+Inicio: 
+HIGH portb.2      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.3      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.4      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.5      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.6      ;led prueba de funcionamiento 
+PAUSE 1000
+HIGH portb.7      ;led prueba de funcionamiento 
+PAUSE 1000   
+LOW portb.2
+LOW portb.3
+LOW portb.4
+LOW portb.5
+LOW portb.6  
+LOW portb.7
+LOW LEDR
+LOW LEDV
+PAUSE 500   
+SEROUT portb.0, N2400, ["APROBAREMOS "] ;enviar serialmente a 24008N1 los caracteres “DOG” 
+PAUSE 400 
+high ledr 
+IF leda=0 THEN
+SEROUT portb.0, N2400, ["A POCO NO?"] ;enviar serialmente a 24008N1 los caracteres “DOG” 
+GOTO ENT
+ENDIF
+ENT:
+pause 500
+SERIN portb.1, N2400, dat       ;recibir dato serial y guardar en datos 
+
+high ledr                                        
+pause 500
+IF dat="A" THEN
+HIGH portb.7      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.6      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.5      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.4      ;led prueba de funcionamiento 
+PAUSE 1000 
+HIGH portb.3      ;led prueba de funcionamiento 
+PAUSE 1000
+HIGH portb.2      ;led prueba de funcionamiento 
+PAUSE 1000   
+LOW portb.2
+LOW portb.3
+LOW portb.4
+LOW portb.5
+LOW portb.6  
+LOW portb.7
+
+GOTO inicio    ;volver a repetir el proceso 
+ENDIF
+END 
+
