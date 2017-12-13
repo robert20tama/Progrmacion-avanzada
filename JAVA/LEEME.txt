@@ -1,0 +1,1 @@
+En java se usaron gui's con terminacion .form, la version de java es netbeans 8.2

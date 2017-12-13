@@ -1,0 +1,53 @@
+interprete de ordenes
+
+operaciones con polinomios
+
+
+
+Declaracion de polinomios
+
+nombre_de_variable=[c1,c2,c3,c4,...,cn]
+
+donde c1,c2,c3,c4,...,cn son numeros enteros
+
+
+
+suma de polinomios +
+
+p1+p2
+
+donde p1,p2 son polinomios de cualquier grado
+
+
+
+resta de polinomios -
+
+p1-p2
+
+donde p1,p2 son polinomios de cualquir grado
+
+
+
+comando mostrar
+
+Imprime la lista de polinomios declarados
+
+
+
+comando clc
+
+borra lo que se encuentre en pantalla
+
+
+
+ejemplo
+
+declaracion de polinomios
+
+p1=[1,2,3]
+p2=[3,2,1]
+
+
+*nota
+la declaracion de polinomios, sus operaciones, y el uso de comandos
+se deben hacer sin dejar espacios.

@@ -1,0 +1,13 @@
+Para el desarrollo de nuestro proyecto final, hicimos uso del lenguaje Basic aplicado en el entorno MICROCODE Studio
+; esto implica que para la visualización de como compilar el archivo, se requiere de la instalación del programa
+MICROCODE Studio y compliador PIC Basic; el cual se encuentra en la carpeta "MICROCODE Studio", el entorno y desarrollo
+del programa se puede apreciar en el reporte, así como el diagrama del circuito y conclusiones porterior a la revisión
+personal del proyecto.
+
+De igual manera, podrá encontrar la interfaz de MICROCODE Studio y compilador pic basi pro, 
+podrá acceder a él mediante el siguiente link:
+
+https://www.youtube.com/watch?v=2fGkQo0qjG4
+
+Link alternativo con archivo PDF que explica el entorno MICROCODE:
+https://www.youtube.com/watch?v=AZVxT0LCL84

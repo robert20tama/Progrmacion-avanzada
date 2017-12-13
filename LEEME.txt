@@ -1,0 +1,2 @@
+En la carpeta "archivos anteriores", estan todos los archivos de los programas que subimos desde antes. 
+Puede que tenga algun error para compilar o correr.

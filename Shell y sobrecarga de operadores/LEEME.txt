@@ -1,0 +1,3 @@
+El progrma se realizo en la version de dev c 4.9.9.2, en una computadora con arquitectura de 32 bits.
+El programa corre de inicio sin modificaciones, si se quiere reconstruir se deberan modificar todos
+los archivos objtos utilizados.

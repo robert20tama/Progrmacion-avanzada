@@ -1,0 +1,1186 @@
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 ; PICBASIC PRO(TM) Compiler 2.50, (c) 1998, 2007 microEngineering Labs, Inc. All Rights Reserved.  
+  00000001            00003 _USED                   EQU     1
+                      00004 
+                      00005         INCLUDE "C:\PBP\16F648A.INC"
+                      00001 ;****************************************************************
+                      00002 ;*  16F648A.INC                                                 *
+                      00003 ;*                                                              *
+                      00004 ;*  By        : Leonard Zerman, Jeff Schmoyer                   *
+                      00005 ;*  Notice    : Copyright (c) 2003 microEngineering Labs, Inc.  *
+                      00006 ;*              All Rights Reserved                             *
+                      00007 ;*  Date      : 11/06/03                                        *
+                      00008 ;*  Version   : 2.45                                            *
+                      00009 ;*  Notes     :                                                 *
+                      00010 ;****************************************************************
+                      00019         LIST
+                      00020         LIST p = 16F648A, r = dec, w = -302
+                      00021         INCLUDE "P16F648A.INC"  ; MPASM  Header
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ;  MPASM PIC16F648A processor include
+                      00005 ; 
+                      00006 ;  (c) Copyright 1999-2012 Microchip Technology, All rights reserved
+                      00007 ;==========================================================================
+                      00008 
+                      00384         LIST
+2007   3F6D           00022         __config _XT_OSC & _WDT_ON & _MCLRE_ON & _LVP_OFF & _CP_OFF
+                      00025         LIST
+                      00006 
+                      00007 
+                      00008 ; Define statements.
+                      00009 ; C:\PBP\16F648A.BAS            00017   DEFINE  CODE_SIZE 4
+                      00010 #define         CODE_SIZE                4
+                      00011 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00013   define   xt_osc;cambia a oscilad
+                            or XT en el IC-Prog.  
+                      00012 #define         xt_osc          ;cambia a oscilador XT en el IC-Prog.  
+                      00013 
+  00000020            00014 RAM_START                       EQU     00020h
+  0000016F            00015 RAM_END                         EQU     0016Fh
+  00000003            00016 RAM_BANKS                       EQU     00003h
+  00000020            00017 BANK0_START                     EQU     00020h
+  0000007F            00018 BANK0_END                       EQU     0007Fh
+  000000A0            00019 BANK1_START                     EQU     000A0h
+  000000EF            00020 BANK1_END                       EQU     000EFh
+  00000120            00021 BANK2_START                     EQU     00120h
+  0000016F            00022 BANK2_END                       EQU     0016Fh
+  00002100            00023 EEPROM_START                    EQU     02100h
+  000021FF            00024 EEPROM_END                      EQU     021FFh
+                      00025 
+                      00026 ; C:\PBP\PBPPIC14.RAM           00012   R0      VAR     WORD BANK0 SYSTEM       ' System Register
+  00000020            00027 R0                              EQU     RAM_START + 000h
+                      00028 ; C:\PBP\PBPPIC14.RAM           00013   R1      VAR     WORD BANK0 SYSTEM       ' System Register
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000022            00029 R1                              EQU     RAM_START + 002h
+                      00030 ; C:\PBP\PBPPIC14.RAM           00014   R2      VAR     WORD BANK0 SYSTEM       ' System Register
+  00000024            00031 R2                              EQU     RAM_START + 004h
+                      00032 ; C:\PBP\PBPPIC14.RAM           00015   R3      VAR     WORD BANK0 SYSTEM       ' System Register
+  00000026            00033 R3                              EQU     RAM_START + 006h
+                      00034 ; C:\PBP\PBPPIC14.RAM           00016   R4      VAR     WORD BANK0 SYSTEM       ' System Register
+  00000028            00035 R4                              EQU     RAM_START + 008h
+                      00036 ; C:\PBP\PBPPIC14.RAM           00017   R5      VAR     WORD BANK0 SYSTEM       ' System Register
+  0000002A            00037 R5                              EQU     RAM_START + 00Ah
+                      00038 ; C:\PBP\PBPPIC14.RAM           00018   R6      VAR     WORD BANK0 SYSTEM       ' System Register
+  0000002C            00039 R6                              EQU     RAM_START + 00Ch
+                      00040 ; C:\PBP\PBPPIC14.RAM           00019   R7      VAR     WORD BANK0 SYSTEM       ' System Register
+  0000002E            00041 R7                              EQU     RAM_START + 00Eh
+                      00042 ; C:\PBP\PBPPIC14.RAM           00020   R8      VAR     WORD BANK0 SYSTEM       ' System Register
+  00000030            00043 R8                              EQU     RAM_START + 010h
+                      00044 ; C:\PBP\PBPPIC14.RAM           00026   FLAGS   VAR     BYTE BANK0 SYSTEM       ' Static flags
+  00000032            00045 FLAGS                           EQU     RAM_START + 012h
+                      00046 ; C:\PBP\PBPPIC14.RAM           00025   GOP     VAR     BYTE BANK0 SYSTEM       ' Gen Op Parameter
+  00000033            00047 GOP                             EQU     RAM_START + 013h
+                      00048 ; C:\PBP\PBPPIC14.RAM           00022   RM1     VAR     BYTE BANK0 SYSTEM       ' Pin 1 Mask
+  00000034            00049 RM1                             EQU     RAM_START + 014h
+                      00050 ; C:\PBP\PBPPIC14.RAM           00024   RM2     VAR     BYTE BANK0 SYSTEM       ' Pin 2 Mask
+  00000035            00051 RM2                             EQU     RAM_START + 015h
+                      00052 ; C:\PBP\PBPPIC14.RAM           00021   RR1     VAR     BYTE BANK0 SYSTEM       ' Pin 1 Register
+  00000036            00053 RR1                             EQU     RAM_START + 016h
+                      00054 ; C:\PBP\PBPPIC14.RAM           00023   RR2     VAR     BYTE BANK0 SYSTEM       ' Pin 2 Register
+  00000037            00055 RR2                             EQU     RAM_START + 017h
+                      00056 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00018   dat VAR BYTE
+  00000038            00057 _dat                            EQU     RAM_START + 018h
+                      00058 ; C:\PBP\16F648A.BAS            00021   PORTL   VAR     PORTB
+  00000006            00059 _PORTL                          EQU      PORTB
+                      00060 ; C:\PBP\16F648A.BAS            00022   PORTH   VAR     PORTA
+  00000005            00061 _PORTH                          EQU      PORTA
+                      00062 ; C:\PBP\16F648A.BAS            00023   TRISL   VAR     TRISB
+  00000086            00063 _TRISL                          EQU      TRISB
+                      00064 ; C:\PBP\16F648A.BAS            00024   TRISH   VAR     TRISA
+  00000085            00065 _TRISH                          EQU      TRISA
+                      00066 #define _ledv                   _PORTA??2
+                      00067 #define _leda                   _PORTA??3
+                      00068 #define _ledr                   _PORTA??4
+                      00069 #define _PORTA??2                PORTA, 002h
+                      00070 #define _PORTA??3                PORTA, 003h
+                      00071 #define _PORTA??4                PORTA, 004h
+                      00072 #define _PORTB??2                PORTB, 002h
+                      00073 #define _PORTB??3                PORTB, 003h
+                      00074 #define _PORTB??4                PORTB, 004h
+                      00075 #define _PORTB??5                PORTB, 005h
+                      00076 #define _PORTB??6                PORTB, 006h
+                      00077 #define _PORTB??7                PORTB, 007h
+                      00078 #define _PORTB??0                PORTB, 000h
+                      00079 #define _PORTB??1                PORTB, 001h
+                      00080 
+                      00081 ; Constants.
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000000            00082 _T2400                          EQU     00000h
+  00000001            00083 _T1200                          EQU     00001h
+  00000002            00084 _T9600                          EQU     00002h
+  00000003            00085 _T300                           EQU     00003h
+  00000004            00086 _N2400                          EQU     00004h
+  00000005            00087 _N1200                          EQU     00005h
+  00000006            00088 _N9600                          EQU     00006h
+  00000007            00089 _N300                           EQU     00007h
+  00000008            00090 _OT2400                         EQU     00008h
+  00000009            00091 _OT1200                         EQU     00009h
+  0000000A            00092 _OT9600                         EQU     0000Ah
+  0000000B            00093 _OT300                          EQU     0000Bh
+  0000000C            00094 _ON2400                         EQU     0000Ch
+  0000000D            00095 _ON1200                         EQU     0000Dh
+  0000000E            00096 _ON9600                         EQU     0000Eh
+  0000000F            00097 _ON300                          EQU     0000Fh
+  00000000            00098 _MSBPRE                         EQU     00000h
+  00000001            00099 _LSBPRE                         EQU     00001h
+  00000002            00100 _MSBPOST                        EQU     00002h
+  00000003            00101 _LSBPOST                        EQU     00003h
+  00000000            00102 _LSBFIRST                       EQU     00000h
+  00000001            00103 _MSBFIRST                       EQU     00001h
+  00000000            00104 _CLS                            EQU     00000h
+  00000001            00105 _HOME                           EQU     00001h
+  00000007            00106 _BELL                           EQU     00007h
+  00000008            00107 _BKSP                           EQU     00008h
+  00000009            00108 _TAB                            EQU     00009h
+  0000000D            00109 _CR                             EQU     0000Dh
+  00000012            00110 _UnitOn                         EQU     00012h
+  0000001A            00111 _UnitOff                        EQU     0001Ah
+  0000001C            00112 _UnitsOff                       EQU     0001Ch
+  00000014            00113 _LightsOn                       EQU     00014h
+  00000010            00114 _LightsOff                      EQU     00010h
+  0000001E            00115 _Dim                            EQU     0001Eh
+  00000016            00116 _Bright                         EQU     00016h
+                      00117         INCLUDE "PA13.MAC"
+                      00001 
+                      00094         LIST
+                      00118         INCLUDE "C:\PBP\PBPPIC14.LIB"
+                      00001 ;******************************************************************
+                      00002 ;*  PBPPIC14.LIB                                                  *
+                      00003 ;*                                                                *
+                      00004 ;*  By        : Leonard Zerman, Jeff Schmoyer                     *
+                      00005 ;*  Notice    : Copyright (c) 2007 microEngineering Labs, Inc.    *
+                      00006 ;*              All Rights Reserved                               *
+                      00007 ;*  Date      : 08/01/07                                          *
+                      00008 ;*  Version   : 2.50                                              *
+                      00009 ;*  Notes     :                                                   *
+                      00010 ;******************************************************************
+                      00046   LIST
+                      00047 ; Oscillator is 4MHz
+                      01112   LIST
+0000                  01113     ORG 0                       ; Reset vector at 0
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01127   LIST
+0000   288C           01128         goto    INIT            ; Finish initialization
+                      03638   LIST
+                      03639 SERIN   CLRWDT?                 ; Keep Watchdog timer clear
+0002   2011           03640         call    serinbit        ; Get a serial bit
+0003   1803           03641         btfsc   STATUS, C       ; Wait for start bit
+0004   2801           03642         goto    SERIN
+                      03648   LIST
+0005   2042           03649 serinstart call sersdelay       ; Wait 1/4 bit time
+0006   3008           03650         movlw   8               ; 8 bits to a byte
+0007   00A3           03651         movwf   R1 + 1          ; Bit counter
+0008   2043           03652 serinloop call  serdelay        ; 2 (22) Wait bit time
+0009   2011           03653         call    serinbit        ; 14 Get a bit
+000A   0CA2           03654         rrf     R1, F           ; 1 Move bit into byte
+000B   280C           03655         goto    $ + 1           ; 2 Burn more time
+000C   0BA3           03656         decfsz  R1 + 1, F       ; 1 / 2 More bits?
+000D   2808           03657         goto    serinloop       ; 2 / 0 Yes
+000E   2043           03658         call    serdelay        ; Delay to stop bit
+                      03659       ifdef SERINTO_USED
+                      03660         bsf     STATUS, C       ; Indicate not timed out (C set)
+                      03661       endif
+000F   0822           03662         movf    R1, W           ; Get char to W
+0010   0008           03663         return
+                      03664 
+0011   0836           03665 serinbit movf   RR1, W          ; 1 (14) Get port
+0012   0084           03666         movwf   FSR             ; 1
+0013   0834           03667         movf    RM1, W          ; 1 W = Bit Mask
+0014   1784           03668         bsf     FSR, 7          ; 1 Point to TRIS
+0015   0480           03669         iorwf   INDF, F         ; 1 Set bit to input
+0016   1384           03670         bcf     FSR, 7          ; 1 Point back to port
+0017   0500           03671         andwf   INDF, W         ; 1 W = Current State
+0018   1933           03672         btfsc   GOP,2           ; 1 / 2 Invert if 'N' Mode
+0019   0634           03673         xorwf   RM1, W          ; 1 / 0
+001A   3EFF           03674         addlw   -1              ; 1 Move bit to Carry
+001B   0008           03675         return                  ; 2 Done
+                      03745   LIST
+001C   00A6           03746 SEROUT  movwf   R3              ; Data to send
+001D   0836           03747         movf    RR1, W          ; Get port
+001E   0084           03748         movwf   FSR
+001F   3009           03749         movlw   9               ; 1 start bit + 8 data bits
+0020   00A7           03750         movwf   R3 + 1
+0021   1003           03751         bcf     STATUS, C       ; Start bit low
+0022   2028           03752 seroutloop call seroutbit       ; 18+ (22) Send a bit
+0023   0CA6           03753         rrf     R3, F           ; 1 Move to next bit
+0024   0BA7           03754         decfsz  R3 + 1, F       ; 1 / 2 Do next bit, if any
+0025   2822           03755         goto    seroutloop      ; 2 / 0
+0026   1403           03756         bsf     STATUS, C       ; 1 Stop bit high
+                      03757       ifndef CHAR_PACING
+0027   2828           03758         goto    seroutbit       ; 18+ Send stop bit (need cycles)
+                      03759       else
+                      03760         call    seroutbit       ; 18+ Send stop bit
+                      03761         movlw   (CHAR_PACING) >> 8
+                      03762         movwf   R0 + 1
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      03763         movlw   low (CHAR_PACING)
+                      03764         goto    PAUSEUSL        ; Delay for character pacing
+                      03765       endif
+                      03766 
+0028   1384           03767 seroutbit bcf   FSR, 7          ; 1 (18+) Make sure we're pointing to the port
+0029   1DB3           03768         btfss   GOP, 3          ; 1 / 2 Check for TRIS mode
+002A   2837           03769         goto    seroutnorm      ; 2 / 0 Go handle normal mode
+                      03770 
+002B   0800           03771         movf    INDF, W         ; 1 Get PORT data
+002C   0434           03772         iorwf   RM1, W          ; 1 Set bit on
+002D   1D33           03773         btfss   GOP, 2          ; 1 / 2 Bit matches invert mode
+002E   0634           03774         xorwf   RM1, W          ; 1 / 0 Set bit off
+002F   0080           03775         movwf   INDF            ; 1 Write it out
+0030   1784           03776         bsf     FSR, 7          ; 1 Point FSR to port TRIS
+0031   0800           03777         movf    INDF, W         ; 1 Get TRIS data
+0032   0434           03778         iorwf   RM1, W          ; 1 Make bit an input
+0033   1C03           03779         btfss   STATUS, C       ; 1 / 2 Bit direction matches bit
+0034   0634           03780         xorwf   RM1, W          ; 1 / 0 Make bit an output
+0035   0080           03781         movwf   INDF            ; 1 Write it out
+0036   2843           03782         goto    serdelay        ; 2 Wait remainder of bit time
+                      03783 
+0037   0800           03784 seroutnorm movf INDF, W         ; 1 Get PORT data
+0038   0434           03785         iorwf   RM1, W          ; 1 Set bit on
+0039   1C03           03786         btfss   STATUS, C       ; 1 / 2 Skip if bit should be on
+003A   0634           03787         xorwf   RM1, W          ; 1 / 0 Set bit off
+003B   1933           03788         btfsc   GOP, 2          ; 1 / 2 Invert if 'N' mode
+003C   0634           03789         xorwf   RM1, W          ; 1 / 0 Flip for invert
+003D   0080           03790         movwf   INDF            ; 1 Write it out
+003E   1784           03791         bsf     FSR, 7          ; 1 Point FSR to port TRIS
+003F   0934           03792         comf    RM1, W          ; 1 Get complemented bit mask to W
+0040   0580           03793         andwf   INDF, F         ; 1 Clear TRIS bit to set output
+0041   2843           03794         goto    serdelay        ; 2 Wait remainder of bit time
+                      03817   LIST
+                      03818       ifdef SERINX_USED
+0042   1733           03819 sersdelay bsf   GOP, 6          ; Mark short delay
+                      03820       endif
+0043   0D33           03821 serdelay rlf    GOP, W          ; 1 (22 + 22) Get baud value x 2
+0044   3906           03822         andlw   06h             ; 1 Mask to our bits
+0045   00A0           03823         movwf   R0              ; 1 Save it
+0046   2051           03824         call    sergettbl       ; 9 Get high part of delay
+0047   00A1           03825         movwf   R0 + 1          ; 1 Store for PAUSEUS
+0048   0AA0           03826         incf    R0, F           ; 1 Point to low entry
+0049   2051           03827         call    sergettbl       ; 9 Get low part of delay
+                      03828       ifndef SERINX_USED
+                      03829         nop                     ; 1
+                      03830         goto    PAUSEUSL        ; -2 (PAUSEUSL gives you 2 less than you ask for)
+                      03831       else
+004A   1F33           03832         btfss   GOP, 6          ; 1
+004B   286B           03833         goto    PAUSEUSL        ; -2 (PAUSEUSL gives you 2 less than you ask for)
+004C   1333           03834         bcf     GOP, 6          ; Clear short delay mark
+004D   00A0           03835         movwf   R0              ; Save low part
+004E   3002           03836         movlw   2               ; Divide time by 4
+004F   2082           03837         call    SHIFTR
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0050   286B           03838         goto    PAUSEUSL        ; Do 1/4 delay
+  00000001            03839 SHIFTR_USED = 1
+                      03840       endif
+                      03841 
+0051   3000           03842 sergettbl movlw sertable >> 8   ; 1 Set PC latch high
+0052   008A           03843         movwf   PCLATH          ; 1
+0053   0820           03844         movf    R0, W           ; 1 Get value for jump
+                      03845         TABLE?C 8               ; 4 Do jump
+0055   3401           03846 sertable retlw  high (SDELAY_2400)
+0056   3475           03847         retlw   low (SDELAY_2400)
+0057   3403           03848         retlw   high (SDELAY_1200)
+0058   3415           03849         retlw   low (SDELAY_1200)
+0059   3400           03850         retlw   high (SDELAY_9600)
+005A   343C           03851         retlw   low (SDELAY_9600)
+005B   340C           03852         retlw   high (SDELAY_300)
+005C   34D9           03853         retlw   low (SDELAY_300)
+                      06158   LIST
+005D   01A3           06159 PAUSE   clrf    R1 + 1
+005E   00A2           06160 PAUSEL  movwf   R1
+005F   30FF           06161 pauseloop movlw -1              ; 1 (9)
+0060   07A2           06162         addwf   R1, F           ; 1
+0061   1C03           06163         btfss   STATUS, C       ; 1 / 2
+0062   07A3           06164         addwf   R1 + 1, F       ; 1 / 0
+0063   1C03           06165         btfss   STATUS, C       ; 2
+0064   2887           06166         goto    DONE
+0065   3003           06167         movlw   (PAUSE_DELAY) >> 8      ; 1
+0066   00A1           06168         movwf   R0 + 1          ; 1
+0067   30DF           06169         movlw   low (PAUSE_DELAY)       ; 1
+0068   206B           06170         call    PAUSEUSL        ; -2 (PAUSEUSL gives you 2 less than you ask for)
+0069   285F           06171         goto    pauseloop       ; 2
+                      06215   LIST
+006A   01A1           06216 PAUSEUS clrf    R0 + 1          ; 1
+006B   3EE8           06217 PAUSEUSL addlw  -24             ; 1 Subtract overhead
+006C   00A0           06218         movwf   R0              ; 1
+006D   09A1           06219         comf    R0 + 1, F       ; 1
+006E   30FC           06220         movlw   -4              ; 1
+006F   1C03           06221         btfss   STATUS, C       ; 1 / 2
+0070   2874           06222         goto    pauseush        ; 2 / 0
+0071   07A0           06223 pauseusloop addwf R0, F         ; 1
+0072   1803           06224         btfsc   STATUS, C       ; 1 / 2
+0073   2871           06225         goto    pauseusloop     ; 2 / 0
+0074   07A0           06226 pauseush addwf  R0, F           ; 1 Do an extra countdown
+                      06227         CLRWDT?NOP              ; 1 Keep Watchdog clear
+0076   0FA1           06228         incfsz  R0 + 1, F       ; 1 / 2
+0077   2871           06229         goto    pauseusloop     ; 2 / 0
+0078   1820           06230         btfsc   R0, 0           ; 1 / 2
+0079   287A           06231         goto    $ + 1           ; 2 / 0 Burn an extra cycle
+007A   1CA0           06232         btfss   R0, 1           ; 1 / 2
+007B   287E           06233         goto    pauseusdone     ; 2 / 0
+007C   0000           06234         nop                     ; 1
+007D   287E           06235         goto    $ + 1           ; 2 Burn an extra 2 cycles
+007E   0008           06236 pauseusdone return              ; 2 + 3 (call + setup)
+                      06746   LIST
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+007F   1003           06747 shiftrloop bcf  STATUS, C       ; Shift in 0 bits
+0080   0CA1           06748         rrf     R0 + 1, F       ; Shift right once
+0081   0CA0           06749         rrf     R0, F
+0082   3EFF           06750 SHIFTR  addlw   -1
+0083   1803           06751         btfsc   STATUS, C       ; Done?
+0084   287F           06752         goto    shiftrloop
+0085   0820           06753         movf    R0, W           ; Move low part of result to W
+0086   2887           06754         goto    DONE
+                      07422   LIST
+0087   1383           07423 DONE    bcf     STATUS, IRP     ; 1 Set FSR to bank 0/1
+0088   1303           07424         bcf     STATUS, RP1     ; 1 Show direct bank 0
+0089   1283           07425         bcf     STATUS, RP0     ; 1
+                      07426         CLRWDT?NOP              ; 1 Hit Watchdog timer
+008B   0008           07427 DONERET return                  ; 2 Done
+                      07451   LIST
+008C                  07452 INIT
+                      07490   LIST
+008C                  07491 main
+                      00119 
+                      00120 
+                      00121 ; C:\PBP\16F648A.BAS            00012   BANK0   $0020, $007F
+                      00122 ; C:\PBP\16F648A.BAS            00013   BANK1   $00A0, $00EF
+                      00123 ; C:\PBP\16F648A.BAS            00014   BANK2   $0120, $016F
+                      00124 ; C:\PBP\16F648A.BAS            00015   EEPROM  $2100, $21FF
+                      00125 ; C:\PBP\16F648A.BAS            00016   LIBRARY "PBPPIC14"
+                      00126 ; C:\PBP\16F648A.BAS            00017   DEFINE  CODE_SIZE 4
+                      00127 
+                      00128 ; C:\PBP\16F648A.BAS            00019           include "PIC14EXT.BAS"
+                      00129 
+                      00130 ; C:\PBP\16F648A.BAS            00026           include "PBPPIC14.RAM"
+                      00131 
+                      00132 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00012   INCLUDE "modedefs.bas"   ;incluy
+                            en los modos de comunicación 
+                      00133 ; C:\PBP\MODEDEFS.BAS           00014   Symbol T2400  = 0       ' Driven True
+                      00134 ; C:\PBP\MODEDEFS.BAS           00015   Symbol T1200  = 1       ' Driven True
+                      00135 ; C:\PBP\MODEDEFS.BAS           00016   Symbol T9600  = 2       ' Driven True
+                      00136 ; C:\PBP\MODEDEFS.BAS           00017   Symbol T300   = 3       ' Driven True
+                      00137 ; C:\PBP\MODEDEFS.BAS           00019   Symbol N2400  = 4       ' Driven Inverted
+                      00138 ; C:\PBP\MODEDEFS.BAS           00020   Symbol N1200  = 5       ' Driven Inverted
+                      00139 ; C:\PBP\MODEDEFS.BAS           00021   Symbol N9600  = 6       ' Driven Inverted
+                      00140 ; C:\PBP\MODEDEFS.BAS           00022   Symbol N300   = 7       ' Driven Inverted
+                      00141 ; C:\PBP\MODEDEFS.BAS           00024   Symbol OT2400 = 8       ' Open True
+                      00142 ; C:\PBP\MODEDEFS.BAS           00025   Symbol OT1200 = 9       ' Open True
+                      00143 ; C:\PBP\MODEDEFS.BAS           00026   Symbol OT9600 = 10      ' Open True
+                      00144 ; C:\PBP\MODEDEFS.BAS           00027   Symbol OT300  = 11      ' Open True
+                      00145 ; C:\PBP\MODEDEFS.BAS           00029   Symbol ON2400 = 12      ' Open Inverted
+                      00146 ; C:\PBP\MODEDEFS.BAS           00030   Symbol ON1200 = 13      ' Open Inverted
+                      00147 ; C:\PBP\MODEDEFS.BAS           00031   Symbol ON9600 = 14      ' Open Inverted
+                      00148 ; C:\PBP\MODEDEFS.BAS           00032   Symbol ON300  = 15      ' Open Inverted
+                      00149 ; C:\PBP\MODEDEFS.BAS           00036   Symbol MSBPRE = 0       ' MSB first, sample before clock
+                      00150 ; C:\PBP\MODEDEFS.BAS           00037   Symbol LSBPRE = 1       ' LSB first, sample before clock
+                      00151 ; C:\PBP\MODEDEFS.BAS           00038   Symbol MSBPOST = 2      ' MSB first, sample after clock
+                      00152 ; C:\PBP\MODEDEFS.BAS           00039   Symbol LSBPOST = 3      ' LSB first, sample after clock
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00153 ; C:\PBP\MODEDEFS.BAS           00042   Symbol LSBFIRST = 0     ' LSB first
+                      00154 ; C:\PBP\MODEDEFS.BAS           00043   Symbol MSBFIRST = 1     ' MSB first
+                      00155 ; C:\PBP\MODEDEFS.BAS           00047   Symbol CLS = 0
+                      00156 ; C:\PBP\MODEDEFS.BAS           00048   Symbol HOME = 1
+                      00157 ; C:\PBP\MODEDEFS.BAS           00049   Symbol BELL = 7
+                      00158 ; C:\PBP\MODEDEFS.BAS           00050   Symbol BKSP = 8
+                      00159 ; C:\PBP\MODEDEFS.BAS           00051   Symbol TAB = 9
+                      00160 ; C:\PBP\MODEDEFS.BAS           00052   Symbol CR = 13
+                      00161 ; C:\PBP\MODEDEFS.BAS           00056   Symbol UnitOn = %10010
+                      00162 ; C:\PBP\MODEDEFS.BAS           00057   Symbol UnitOff = %11010
+                      00163 ; C:\PBP\MODEDEFS.BAS           00058   Symbol UnitsOff = %11100
+                      00164 ; C:\PBP\MODEDEFS.BAS           00059   Symbol LightsOn = %10100
+                      00165 ; C:\PBP\MODEDEFS.BAS           00060   Symbol LightsOff = %10000
+                      00166 ; C:\PBP\MODEDEFS.BAS           00061   Symbol Dim = %11110
+                      00167 ; C:\PBP\MODEDEFS.BAS           00062   Symbol Bright = %10110
+                      00168 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00013   define   xt_osc;cambia a oscilad
+                            or XT en el IC-Prog.  
+                      00169 
+                      00170 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00014   cmcon = 7
+                      00171         MOVE?CB 007h, CMCON
+                      00172 
+                      00173 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00019   Inicio: 
+                      00174 
+                      00175         LABEL?L _Inicio 
+                      00176 
+                      00177 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00020   HIGH portb.2      ;led prueba de
+                             funcionamiento 
+                      00178         HIGH?T  _PORTB??2
+                      00179 
+                      00180 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00021   PAUSE 1000 
+                      00181         PAUSE?C 003E8h
+                      00182 
+                      00183 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00022   HIGH portb.3      ;led prueba de
+                             funcionamiento 
+                      00184         HIGH?T  _PORTB??3
+                      00185 
+                      00186 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00023   PAUSE 1000 
+                      00187         PAUSE?C 003E8h
+                      00188 
+                      00189 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00024   HIGH portb.4      ;led prueba de
+                             funcionamiento 
+                      00190         HIGH?T  _PORTB??4
+                      00191 
+                      00192 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00025   PAUSE 1000 
+                      00193         PAUSE?C 003E8h
+                      00194 
+                      00195 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00026   HIGH portb.5      ;led prueba de
+                             funcionamiento 
+                      00196         HIGH?T  _PORTB??5
+                      00197 
+                      00198 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00027   PAUSE 1000 
+                      00199         PAUSE?C 003E8h
+                      00200 
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00201 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00028   HIGH portb.6      ;led prueba de
+                             funcionamiento 
+                      00202         HIGH?T  _PORTB??6
+                      00203 
+                      00204 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00029   PAUSE 1000
+                      00205         PAUSE?C 003E8h
+                      00206 
+                      00207 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00030   HIGH portb.7      ;led prueba de
+                             funcionamiento 
+                      00208         HIGH?T  _PORTB??7
+                      00209 
+                      00210 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00031   PAUSE 1000   
+                      00211         PAUSE?C 003E8h
+                      00212 
+                      00213 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00032   LOW portb.2
+                      00214         LOW?T   _PORTB??2
+                      00215 
+                      00216 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00033   LOW portb.3
+                      00217         LOW?T   _PORTB??3
+                      00218 
+                      00219 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00034   LOW portb.4
+                      00220         LOW?T   _PORTB??4
+                      00221 
+                      00222 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00035   LOW portb.5
+                      00223         LOW?T   _PORTB??5
+                      00224 
+                      00225 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00036   LOW portb.6  
+                      00226         LOW?T   _PORTB??6
+                      00227 
+                      00228 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00037   LOW portb.7
+                      00229         LOW?T   _PORTB??7
+                      00230 
+                      00231 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00038   LOW LEDR
+                      00232         LOW?T   _ledr
+                      00233 
+                      00234 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00039   LOW LEDV
+                      00235         LOW?T   _ledv
+                      00236 
+                      00237 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00040   PAUSE 500   
+                      00238         PAUSE?C 001F4h
+                      00239 
+                      00240 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00041   SEROUT portb.0, N2400, ["APROBAR
+                            EMOS "] ;enviar serialmente a 24008N1 los caracteres “DOG” 
+                      00241         SERPIN?T        _PORTB??0
+                      00242         SERMODE?C       _N2400
+                      00243         SEROUT?C        041h
+                      00244         SEROUT?C        050h
+                      00245         SEROUT?C        052h
+                      00246         SEROUT?C        04Fh
+                      00247         SEROUT?C        042h
+                      00248         SEROUT?C        041h
+                      00249         SEROUT?C        052h
+                      00250         SEROUT?C        045h
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00251         SEROUT?C        04Dh
+                      00252         SEROUT?C        04Fh
+                      00253         SEROUT?C        053h
+                      00254         SEROUT?C        020h
+                      00255 
+                      00256 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00042   PAUSE 400 
+                      00257         PAUSE?C 00190h
+                      00258 
+                      00259 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00043   high ledr 
+                      00260         HIGH?T  _ledr
+                      00261 
+                      00262 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00044   IF leda=0 THEN
+                      00263         CMPNE?TCL       _leda, 000h, L00001
+                      00264 
+                      00265 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00045   SEROUT portb.0, N2400, ["A POCO 
+                            NO?"] ;enviar serialmente a 24008N1 los caracteres “DOG” 
+                      00266         SERPIN?T        _PORTB??0
+                      00267         SERMODE?C       _N2400
+                      00268         SEROUT?C        041h
+                      00269         SEROUT?C        020h
+                      00270         SEROUT?C        050h
+                      00271         SEROUT?C        04Fh
+                      00272         SEROUT?C        043h
+                      00273         SEROUT?C        04Fh
+                      00274         SEROUT?C        020h
+                      00275         SEROUT?C        04Eh
+                      00276         SEROUT?C        04Fh
+                      00277         SEROUT?C        03Fh
+                      00278 
+                      00279 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00046   GOTO ENT
+                      00280         GOTO?L  _ENT
+                      00281 
+                      00282 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00047   ENDIF
+                      00283         LABEL?L L00001  
+                      00284 
+                      00285 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00048   ENT:
+                      00286 
+                      00287         LABEL?L _ENT    
+                      00288 
+                      00289 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00049   pause 500
+                      00290         PAUSE?C 001F4h
+                      00291 
+                      00292 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00050   SERIN portb.1, N2400, dat       
+                            ;recibir dato serial y guardar en datos 
+                      00293         SERPIN?T        _PORTB??1
+                      00294         SERMODE?C       _N2400
+                      00295         SERIN?B _dat
+                      00296 
+                      00297 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00052   high ledr                       
+                                             
+                      00298         HIGH?T  _ledr
+                      00299 
+                      00300 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00053   pause 500
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00301         PAUSE?C 001F4h
+                      00302 
+                      00303 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00054   IF dat="A" THEN
+                      00304         CMPNE?BCL       _dat, 041h, L00003
+                      00305 
+                      00306 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00055   HIGH portb.7      ;led prueba de
+                             funcionamiento 
+                      00307         HIGH?T  _PORTB??7
+                      00308 
+                      00309 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00056   PAUSE 1000 
+                      00310         PAUSE?C 003E8h
+                      00311 
+                      00312 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00057   HIGH portb.6      ;led prueba de
+                             funcionamiento 
+                      00313         HIGH?T  _PORTB??6
+                      00314 
+                      00315 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00058   PAUSE 1000 
+                      00316         PAUSE?C 003E8h
+                      00317 
+                      00318 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00059   HIGH portb.5      ;led prueba de
+                             funcionamiento 
+                      00319         HIGH?T  _PORTB??5
+                      00320 
+                      00321 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00060   PAUSE 1000 
+                      00322         PAUSE?C 003E8h
+                      00323 
+                      00324 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00061   HIGH portb.4      ;led prueba de
+                             funcionamiento 
+                      00325         HIGH?T  _PORTB??4
+                      00326 
+                      00327 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00062   PAUSE 1000 
+                      00328         PAUSE?C 003E8h
+                      00329 
+                      00330 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00063   HIGH portb.3      ;led prueba de
+                             funcionamiento 
+                      00331         HIGH?T  _PORTB??3
+                      00332 
+                      00333 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00064   PAUSE 1000
+                      00334         PAUSE?C 003E8h
+                      00335 
+                      00336 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00065   HIGH portb.2      ;led prueba de
+                             funcionamiento 
+                      00337         HIGH?T  _PORTB??2
+                      00338 
+                      00339 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00066   PAUSE 1000   
+                      00340         PAUSE?C 003E8h
+                      00341 
+                      00342 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00067   LOW portb.2
+                      00343         LOW?T   _PORTB??2
+                      00344 
+                      00345 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00068   LOW portb.3
+                      00346         LOW?T   _PORTB??3
+                      00347 
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00348 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00069   LOW portb.4
+                      00349         LOW?T   _PORTB??4
+                      00350 
+                      00351 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00070   LOW portb.5
+                      00352         LOW?T   _PORTB??5
+                      00353 
+                      00354 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00071   LOW portb.6  
+                      00355         LOW?T   _PORTB??6
+                      00356 
+                      00357 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00072   LOW portb.7
+                      00358         LOW?T   _PORTB??7
+                      00359 
+                      00360 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00074   GOTO inicio    ;volver a repetir
+                             el proceso 
+                      00361         GOTO?L  _Inicio
+                      00362 
+                      00363 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00075   ENDIF
+                      00364         LABEL?L L00003  
+                      00365 
+                      00366 ; C:\USERS\USUARIO\DOCUMENTS\MCS\MICROCONTROLADORES\PA13.PBP    00076   END 
+                      00367         END?    
+                      00368 
+                      00369         END
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADC_BITS                          00000008
+ADC_CLOCK                         00000003
+ADC_SAMPLEUS                      00000032
+ADDEN                             00000003
+ADEN                              00000003
+BANK0_END                         0000007F
+BANK0_START                       00000020
+BANK1_END                         000000EF
+BANK1_START                       000000A0
+BANK2_END                         0000016F
+BANK2_START                       00000120
+BIT?FLIP                          
+BIT?FW                            
+BIT?GOTO                          
+BIT?R1                            
+BIT?R2                            
+BIT?W                             
+BRGH                              00000002
+BUTTON_PAUSE                      0000000A
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP1_BIT                          00000003
+CCP1_REG                          00000006
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CHK?RP                            
+CIS                               00000003
+CLRWDT?                           
+CLRWDT?NOP                        
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000001F
+CMIE                              00000006
+CMIF                              00000006
+CMPNE?BCL                         
+CMPNE?TCL                         
+CODE_SIZE                         4
+CREN                              00000004
+CSRC                              00000007
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 14
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+DATA_CP_OFF                       00003FFF
+DATA_CP_ON                        00003EFF
+DC                                00000001
+DEBUGIN_BIT                       00000000
+DEBUGIN_MODE                      00000001
+DEBUGIN_REG                       00000006
+DEBUG_BAUD                        00000960
+DEBUG_BIT                         00000000
+DEBUG_DELAY                       00000193
+DEBUG_MODE                        00000001
+DEBUG_REG                         00000006
+DONE                              00000087
+DONERET                           0000008B
+DONE_USED                         00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+EEPROM_END                        000021FF
+EEPROM_START                      00002100
+END?                              
+F                                 00000001
+FERR                              00000002
+FLAGS                             00000032
+FSR                               00000004
+GIE                               00000007
+GOP                               00000033
+GOTO?L                            
+HIGH?T                            
+HSER_BAUD                         00000960
+HSER_BITS                         00000008
+HSER_RCSTA                        00000090
+HSER_SPBRG                        00000019
+HSER_TXSTA                        00000020
+I2CFIRSTFLAG                      FLAGS, 2
+I2CREADFLAG                       FLAGS, 3
+I2CSTOPFLAG                       FLAGS, 5
+I2CSTOPSTRFLAG                    FLAGS, 6
+I2CWRITEFLAG                      FLAGS, 4
+INDF                              00000000
+INIT                              0000008C
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+L00001                            00000146
+L00003                            000001B3
+L?CALL                            
+L?GOTO                            
+LABEL?L                           
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 15
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+LCDCDFLAG                         FLAGS, 0
+LCDINITFLAG                       FLAGS, 1
+LCD_BITS                          00000004
+LCD_COMMANDUS                     000005DC
+LCD_DATAUS                        0000002C
+LCD_DBIT                          00000000
+LCD_DREG                          00000005
+LCD_EBIT                          00000003
+LCD_EREG                          00000006
+LCD_LINES                         00000002
+LCD_RSBIT                         00000004
+LCD_RSREG                         00000005
+LCD_RWBIT                         00000004
+LCD_RWREG                         00000005
+LOW?T                             
+MOVE?AB                           
+MOVE?AT                           
+MOVE?AW                           
+MOVE?AWW                          
+MOVE?BA                           
+MOVE?BB                           
+MOVE?BT                           
+MOVE?BW                           
+MOVE?CA                           
+MOVE?CB                           
+MOVE?CT                           
+MOVE?CW                           
+MOVE?TA                           
+MOVE?TB                           
+MOVE?TT                           
+MOVE?TW                           
+MOVE?WA                           
+MOVE?WB                           
+MOVE?WT                           
+MOVE?WW                           
+MOVE?WWA                          
+NOT_BO                            00000000
+NOT_BOD                           00000000
+NOT_BOR                           00000000
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OERR                              00000001
+OPTION_REG                        00000081
+OSC                               00000004
+OSCF                              00000003
+OSC_VALID                         00000001
+PAUSE                             0000005D
+PAUSE?C                           
+PAUSEL                            0000005E
+PAUSEUS                           0000006A
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 16
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PAUSEUSL                          0000006B
+PAUSEUS_USED                      00000001
+PAUSE_DELAY                       000003DF
+PAUSE_USED                        00000001
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PORTA                             00000005
+PORTB                             00000006
+PR2                               00000092
+PREV_BANK                         00000000
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+R0                                00000020
+R1                                00000022
+R2                                00000024
+R3                                00000026
+R4                                00000028
+R5                                0000002A
+R6                                0000002C
+R7                                0000002E
+R8                                00000030
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RAM_BANKS                         00000003
+RAM_END                           0000016F
+RAM_START                         00000020
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RM1                               00000034
+RM2                               00000035
+RP0                               00000005
+RP1                               00000006
+RR1                               00000036
+RR2                               00000037
+RST?RP                            
+RX9                               00000006
+RX9D                              00000000
+SDELAY_1200                       00000315
+SDELAY_2400                       00000175
+SDELAY_300                        00000CD9
+SDELAY_9600                       0000003C
+SERDELAY_USED                     00000001
+SERIN                             00000001
+SERIN?B                           
+SERINX_USED                       00000001
+SERIN_USED                        00000001
+SERMODE?C                         
+SEROUT                            0000001C
+SEROUT?C                          
+SEROUT_USED                       00000001
+SERPIN?T                          
+SHIFTR                            00000082
+SHIFTR_USED                       00000001
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1OSCEN                           00000003
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TABLE?C                           
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 18
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRMT                              00000001
+TX9                               00000006
+TX9D                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             0000009F
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_BELL                             00000007
+_BKSP                             00000008
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_Bright                           00000016
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_CLS                              00000000
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_CR                               0000000D
+_DEVID1                           00002006
+_Dim                              0000001E
+_ENT                              00000146
+_ER_OSC_CLKOUT                    00003FFF
+_ER_OSC_NOCLKOUT                  00003FFE
+_EXTCLK_OSC                       00003FEF
+_FOSC_ECIO                        00003FEF
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FEE
+_FOSC_INTOSCCLK                   00003FFD
+_FOSC_INTOSCIO                    00003FFC
+_FOSC_LP                          00003FEC
+_FOSC_XT                          00003FED
+_HOME                             00000001
+_HS_OSC                           00003FEE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_INTOSC_OSC_CLKOUT                00003FFD
+_INTOSC_OSC_NOCLKOUT              00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_Inicio                           0000008E
+_LP_OSC                           00003FEC
+_LSBFIRST                         00000000
+_LSBPOST                          00000003
+_LSBPRE                           00000001
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_LightsOff                        00000010
+_LightsOn                         00000014
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_MSBFIRST                         00000001
+_MSBPOST                          00000002
+_MSBPRE                           00000000
+_N1200                            00000005
+_N2400                            00000004
+_N300                             00000007
+_N9600                            00000006
+_ON1200                           0000000D
+_ON2400                           0000000C
+_ON300                            0000000F
+_ON9600                           0000000E
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_OT1200                           00000009
+_OT2400                           00000008
+_OT300                            0000000B
+_OT9600                           0000000A
+_PORTA??2                         PORTA, 002h
+_PORTA??3                         PORTA, 003h
+_PORTA??4                         PORTA, 004h
+_PORTB??0                         PORTB, 000h
+_PORTB??1                         PORTB, 001h
+_PORTB??2                         PORTB, 002h
+_PORTB??3                         PORTB, 003h
+_PORTB??4                         PORTB, 004h
+_PORTB??5                         PORTB, 005h
+_PORTB??6                         PORTB, 006h
+_PORTB??7                         PORTB, 007h
+_PORTH                            00000005
+_PORTL                            00000006
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC_CLKOUT                    00003FFF
+_RC_OSC_NOCLKOUT                  00003FFE
+_T1200                            00000001
+_T2400                            00000000
+_T300                             00000003
+_T9600                            00000002
+_TAB                              00000009
+_TRISH                            00000085
+_TRISL                            00000086
+_USED                             00000001
+_UnitOff                          0000001A
+_UnitOn                           00000012
+_UnitsOff                         0000001C
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FED
+__16F648A                         00000001
+_dat                              00000038
+_leda                             _PORTA??3
+_ledr                             _PORTA??4
+_ledv                             _PORTA??2
+main                              0000008C
+pauseloop                         0000005F
+pauseusdone                       0000007E
+pauseush                          00000074
+pauseusloop                       00000071
+serdelay                          00000043
+sergettbl                         00000051
+serinbit                          00000011
+serinloop                         00000008
+serinstart                        00000005
+seroutbit                         00000028
+MPASM  5.44                          PA13.ASM   12-12-2017  16:04:00         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+seroutloop                        00000022
+seroutnorm                        00000037
+sersdelay                         00000042
+sertable                          00000055
+shiftrloop                        0000007F
+xt_osc                            
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXX----------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   438
+Program Memory Words Free:  3658
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,    28 suppressed
+
+
